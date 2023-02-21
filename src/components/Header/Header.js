@@ -1,15 +1,13 @@
 import React from "react";
-import "./Header.css";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import "./Header.css";
+import { headerImg } from "../../utilities/urls";
 
 function Header() {
   return (
     <div className="header">
-      <img
-        className="headerImg"
-        src="https://images-na.ssl-images-amazon.com/images/G/01/gno/images/general/backup-logo_blue._CB481621655_.png"
-      />
+      <img className="headerImg" src={headerImg} />
 
       <div className="headerSearch">
         <input className="headerSearchInput" typpe="text" />

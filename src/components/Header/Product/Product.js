@@ -1,0 +1,29 @@
+import React from "react";
+import "./Product.css";
+function Product({ title, price, rating, image }) {
+  return (
+    <div className="product">
+      <div className="productInfo">
+        <p>{title}</p>
+        <p className="productPrice">
+          <small>$</small>
+          <strong>{price}</strong>
+        </p>
+
+        <div className="productRating">
+          {Array(rating)
+            .fill()
+            .map((_, index) => (
+              <p key={index.toString()}>🌟</p>
+            ))}
+        </div>
+      </div>
+
+      <img src={image} alt="" />
+
+      <button>Add to Basket</button>
+    </div>
+  );
+}
+
+export default Product;
