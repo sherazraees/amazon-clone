@@ -10,7 +10,12 @@
     margin: 10px;
     background-color: white;
     z-index: 1;
+  }
+  
+.product:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.3);
 }
+
 
 .productRating{
     display: flex;
