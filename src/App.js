@@ -7,6 +7,7 @@ import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useStateValue } from "./store/StateProvider";
+import Payment from "./pages/Payment";
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -36,6 +37,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="/Checkout" element={<Checkout />} />
         <Route exact path="/Login" element={<Login />} />
+        <Route exact path="/payment" element={<Payment />} />
       </Routes>
     </Router>
   );
