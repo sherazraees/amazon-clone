@@ -9,8 +9,6 @@ import { getAuth } from "firebase/auth";
 function Header() {
   const [{ cart, user }, dispatct] = useStateValue();
 
-  console.log(user);
-
   const handleAuthentication = () => {
     getAuth().signOut();
   };
