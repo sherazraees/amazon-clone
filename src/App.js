@@ -1,11 +1,35 @@
+import React, { useEffect } from "react";
 import "./App.css";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useStateValue } from "./store/StateProvider";
 
 function App() {
+  const [{}, dispatch] = useStateValue();
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        //  User is just signed in or user was signed
+        dispatch({
+          type: "SET_USER",
+          payload: user,
+        });
+      } else {
+        // User is signed out
+        dispatch({
+          type: "SET_USER",
+          payload: null,
+        });
+      }
+    });
+  }, []);
+
   return (
     <Router>
       <Routes>

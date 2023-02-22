@@ -5,9 +5,15 @@ import "./Header.css";
 import { headerImg } from "../../utilities/urls";
 import { Link } from "react-router-dom";
 import { useStateValue } from "../../store/StateProvider";
-
+import { getAuth } from "firebase/auth";
 function Header() {
-  const [{ cart, dispatch }] = useStateValue();
+  const [{ cart, user }, dispatct] = useStateValue();
+
+  console.log(user);
+
+  const handleAuthentication = () => {
+    getAuth().signOut();
+  };
   return (
     <div className="header">
       <Link to="/">
@@ -19,10 +25,12 @@ function Header() {
       </div>
 
       <div className="headerNav">
-        <Link to="/Login">
-          <div className="headerOption">
+        <Link to={!user && "/Login"}>
+          <div onClick={handleAuthentication} className="headerOption">
             <span className="headerOptionLineOne">Hello Guest</span>
-            <span className="headerOptionLineTwo">Sign In</span>
+            <span className="headerOptionLineTwo">
+              {user ? "Sign Out" : "Sign In"}
+            </span>
           </div>
         </Link>
         <div className="headerOption">

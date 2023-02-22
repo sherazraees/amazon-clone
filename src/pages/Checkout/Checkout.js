@@ -6,7 +6,7 @@ import { useStateValue } from "../../store/StateProvider";
 import Header from "../../components/Header";
 
 function Checkout() {
-  const [{ cart }, dispatch] = useStateValue();
+  const [{ cart, user }, dispatch] = useStateValue();
   return (
     <div>
       <Header />
@@ -18,6 +18,13 @@ function Checkout() {
           />
 
           <div>
+            <h5
+              style={{
+                marginLeft: "10px",
+              }}
+            >
+              {user?.email}
+            </h5>
             <h2 className="checkoutTitle">Your shopping Basket</h2>
             {cart.map((item) => {
               return (
