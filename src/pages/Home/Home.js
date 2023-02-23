@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import { homeImg } from "../../utilities/urls";
 import "./Home.css";
 import Product from "../../components/Header/Product/Product";
+import Footer from "../../components/Footer/Footer";
 
 function Home() {
   return (
@@ -64,6 +65,7 @@ function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

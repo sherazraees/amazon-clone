@@ -22,58 +22,82 @@ function Payment() {
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState(true);
 
-  useEffect(() => {
-    const getClientSecret = async () => {
-      const response = await axios({
-        method: "post",
-        // Stripe expects the total in a currencies subunits
-        url: `/payments/create?total=${getCartTotal(cart) * 100}`,
-      });
-      console.log("Response", response);
-      setClientSecret(response.data.clientSecret);
-    };
-    getClientSecret();
-  }, [cart]);
+  // useEffect(() => {
+  //   const getClientSecret = async () => {
+  //     const response = await axios({
+  //       method: "post",
+  //       url: `/payments/create?total=${getCartTotal(cart) * 100}`,
+  //     });
+  //     setClientSecret(response.data.clientSecret);
+  //   };
+  //   getClientSecret();
+  // }, [cart]);
 
-  const handleSubmit = async (event) => {
-    // do all the fancy stripe stuff...
-    event.preventDefault();
-    setProcessing(true);
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(async ({ paymentIntent }) => {
-        // paymentIntent = payment confirmation
+  // const handleSubmit = async (event) => {
+  //   // do all the fancy stripe stuff...
+  //   event.preventDefault();
+  //   setProcessing(true);
+  //   const payload = await stripe
+  //     .confirmCardPayment(clientSecret, {
+  //       payment_method: {
+  //         card: elements.getElement(CardElement),
+  //       },
+  //     })
+  //     .then(async ({ paymentIntent }) => {
+  //       // paymentIntent = payment confirmation
 
-        const userDocRef = doc(db, "users", user?.uid);
-        const ordersCollectionRef = collection(userDocRef, "orders");
-        const orderDocRef = doc(ordersCollectionRef, paymentIntent.id);
+  //       const userDocRef = doc(db, "users", user?.uid);
+  //       const ordersCollectionRef = collection(userDocRef, "orders");
+  //       const orderDocRef = doc(ordersCollectionRef, paymentIntent.id);
 
-        await setDoc(orderDocRef, {
-          cart: cart,
-          amount: paymentIntent.amount,
-          created: paymentIntent.created,
-        });
+  //       await setDoc(orderDocRef, {
+  //         cart: cart,
+  //         amount: paymentIntent.amount,
+  //         created: paymentIntent.created,
+  //       });
 
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
-        dispatch({
-          type: "EMPTY_CART",
-        });
-        navigation("/orders");
-        //     history.replace("/orders");
-      });
-  };
+  //       setSucceeded(true);
+  //       setError(null);
+  //       setProcessing(false);
+  //       dispatch({
+  //         type: "EMPTY_CART",
+  //       });
+  //       navigation("/");
+  //       //     history.replace("/orders");
+  //     });
+  // };
 
   const handleChange = (event) => {
     // Listen for changes in the CardElement
     // and display any errors as the customer types their card details
     setDisabled(event.empty);
     setError(event.error ? event.error.message : "");
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setProcessing(true);
+
+    const userDocRef = doc(db, "users", user?.uid);
+    const ordersCollectionRef = collection(userDocRef, "orders");
+    const orderDocRef = doc(
+      ordersCollectionRef,
+      "xyzpwuwqwu" + Math.floor(Date.now() / 1000) + "posjdsdihsh"
+    );
+
+    await setDoc(orderDocRef, {
+      cart: cart,
+      amount: getCartTotal(cart) * 100,
+      created: Math.floor(Date.now() / 1000),
+    });
+
+    setSucceeded(true);
+    setError(null);
+    setProcessing(false);
+    dispatch({
+      type: "EMPTY_CART",
+    });
+    navigation("/orders");
   };
 
   return (
