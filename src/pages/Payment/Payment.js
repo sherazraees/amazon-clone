@@ -22,21 +22,23 @@ function Payment() {
 
   useEffect(() => {
     // generate the special stripe secret which allows us to charge a customer
-    // const getClientSecret = async () => {
-    //   const response = await axios({
-    //     method: "post",
-    //     // Stripe expects the total in a currencies subunits
-    //     url: `/payments/create?total=${getCartTotal(cart) * 100}`,
-    //   });
-    //   setClientSecret(response.data.clientSecret);
-    //};
-    //getClientSecret();
+    const getClientSecret = async () => {
+      const response = await axios({
+        method: "post",
+        // Stripe expects the total in a currencies subunits
+        url: `/payments/create?total=${getCartTotal(cart) * 100}`,
+      });
+      console.log("Response", response);
+      setClientSecret(response.data.clientSecret);
+    };
+    getClientSecret();
   }, [cart]);
 
+  console.log(clientSecret, "SECRET KEY");
   const handleSubmit = async (event) => {
     // do all the fancy stripe stuff...
-    // event.preventDefault();
-    // setProcessing(true);
+    event.preventDefault();
+    setProcessing(true);
     const payload = await stripe
       .confirmCardPayment(clientSecret, {
         payment_method: {
@@ -63,7 +65,6 @@ function Payment() {
         navigation("/orders");
         //     history.replace("/orders");
       });
-    navigation("/");
   };
 
   const handleChange = (event) => {
@@ -99,6 +100,7 @@ function Payment() {
             <div className="paymentItems">
               {cart.map((item) => (
                 <CheckoutProduct
+                  key={item.id}
                   id={item.id}
                   title={item.title}
                   price={item.price}
