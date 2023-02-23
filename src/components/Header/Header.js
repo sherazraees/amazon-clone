@@ -33,10 +33,13 @@ function Header() {
             </span>
           </div>
         </Link>
-        <div className="headerOption">
-          <span className="headerOptionLineOne">Returns</span>
-          <span className="headerOptionLineTwo">& Orders</span>
-        </div>
+
+        <Link to={user && "/orders"}>
+          <div className="headerOption">
+            <span className="headerOptionLineOne">Returns</span>
+            <span className="headerOptionLineTwo">& Orders</span>
+          </div>
+        </Link>
 
         <div className="headerOption">
           <span className="headerOptionLineOne">Your</span>

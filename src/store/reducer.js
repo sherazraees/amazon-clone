@@ -10,6 +10,8 @@ export const reducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
       return { ...state, cart: [...state.cart, action.payload] };
+    case "EMPTY_CART":
+      return { ...state, cart: [] };
     case "REMOVE_FROM_CART":
       console.log(action.payload, "State", state.cart);
       const index = state.cart.findIndex(

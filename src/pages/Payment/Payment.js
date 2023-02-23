@@ -8,6 +8,8 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CurrencyFormat from "react-currency-format";
 import { getCartTotal } from "../../store/reducer";
 import axios from "../../utilities/axios";
+import { db } from "../../firebase";
+import { doc, setDoc, collection, addDoc } from "firebase/firestore";
 
 function Payment() {
   const [{ cart, user }, dispatch] = useStateValue();
@@ -21,7 +23,6 @@ function Payment() {
   const [clientSecret, setClientSecret] = useState(true);
 
   useEffect(() => {
-    // generate the special stripe secret which allows us to charge a customer
     const getClientSecret = async () => {
       const response = await axios({
         method: "post",
@@ -34,7 +35,6 @@ function Payment() {
     getClientSecret();
   }, [cart]);
 
-  console.log(clientSecret, "SECRET KEY");
   const handleSubmit = async (event) => {
     // do all the fancy stripe stuff...
     event.preventDefault();
@@ -45,23 +45,25 @@ function Payment() {
           card: elements.getElement(CardElement),
         },
       })
-      .then(({ paymentIntent }) => {
+      .then(async ({ paymentIntent }) => {
         // paymentIntent = payment confirmation
-        // db.collection("users")
-        //   .doc(user?.uid)
-        //   .collection("orders")
-        //   .doc(paymentIntent.id)
-        //   .set({
-        //     cart: cart,
-        //     amount: paymentIntent.amount,
-        //     created: paymentIntent.created,
-        //   });
+
+        const userDocRef = doc(db, "users", user?.uid);
+        const ordersCollectionRef = collection(userDocRef, "orders");
+        const orderDocRef = doc(ordersCollectionRef, paymentIntent.id);
+
+        await setDoc(orderDocRef, {
+          cart: cart,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+        });
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
-        // dispatch({
-        //   type: "EMPTY_BASKET",
-        // });
+        dispatch({
+          type: "EMPTY_CART",
+        });
         navigation("/orders");
         //     history.replace("/orders");
       });
