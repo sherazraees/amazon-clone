@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+Amazon Clone
+============
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React project that is a clone of the Amazon website. The app uses Firebase for authentication, cart functionality, and database, Redux for state management, Stripe for payment integration, and Cloud Functions for serverless functionality. The app is deployed on Firebase Hosting and can be accessed using this [link](https://clone-1a7ae.web.app/).
 
-## Available Scripts
+Technologies Used
+-----------------
 
-In the project directory, you can run:
+-   React
+-   Firebase
+-   Redux
+-   Stripe
+-   Cloud Functions
 
-### `npm start`
+Functionalities
+---------------
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   User Authentication: The app allows users to sign up, sign in, and sign out using Firebase authentication. The app also has a password reset feature.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-   Cart Functionality: The app allows users to add products to their cart, remove products from their cart, and update the quantity of products in their cart. The app also displays the total price of the products in the cart.
 
-### `npm test`
+-   Database: The app uses Firebase's Firestore database to store user information, product information, and cart information.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   State Management: The app uses Redux for state management. The app's state includes user information, product information, cart information, and payment information.
 
-### `npm run build`
+-   Payment Integration: The app uses Stripe for payment integration. The app allows users to make payments using their credit or debit cards.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-   Orders History: The app allows users to view their order history. The app displays the date, time, and total price of each order.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   Cloud Functions: The app uses Firebase's Cloud Functions for serverless functionality.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Installation
+------------
 
-### `npm run eject`
+To install the app, first clone the repository:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+bashCopy code
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`git clone https://github.com/sherazraees/amazon-clone.git`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Then install the dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+bashCopy code
 
-## Learn More
+`cd amazon-clone
+npm install`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Stripe Integration and Cloud Functions
+--------------------------------------
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The Amazon clone project integrates with Stripe for payment processing, using a publishable key in the frontend and a secret key in the backend. To securely process payments, a cloud function is created using Firebase cloud functions, which is triggered by a request from the frontend and returns a response indicating whether the payment was successful or not. The Stripe secret key is not exposed in the frontend code or the Firebase cloud function code for security reasons. Instead, a separate backend API is used to fetch the Stripe secret key from the Stripe account and return it to the cloud function. This setup ensures that payment transactions are processed securely and efficiently.
 
-### Code Splitting
+bashCopy code
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+`cd functions
+firebase deploy --only functions`
 
-### Analyzing the Bundle Size
+Usage
+-----
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Once the app is running, you will be able to browse products, add products to your cart, and make payments using Stripe.
 
-### Making a Progressive Web App
+Contributing
+------------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Contributions to this project are welcome. To contribute, fork the repository and create a pull request.
 
-### Advanced Configuration
+License
+-------
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT license.
